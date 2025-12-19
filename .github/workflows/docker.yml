@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read     # 默认权限，用于 checkout 代码
-      packages: write    # 🚀 关键：赋予 GITHUB_TOKEN 推送 GHCR 的权限 🚀
+      packages: write    # 关键：赋予 GITHUB_TOKEN 推送 GHCR 的权限
 
     steps:
       - name: Checkout repository
@@ -22,9 +22,9 @@ jobs:
       - name: Log in to GitHub Container Registry # 更改登录步骤名称
         uses: docker/login-action@v2             # 保持 @v2 没问题
         with:
-          registry: ghcr.io                      # 🚀 关键：指定 GHCR 注册表地址 🚀
-          username: ${{ github.actor }}          # 🚀 关键：使用工作流触发者作为用户名 🚀
-          password: ${{ secrets.GITHUB_TOKEN }}  # 🚀 关键：使用内置的 GITHUB_TOKEN 作为密码 🚀
+          registry: ghcr.io                      # 关键：指定 GHCR 注册表地址
+          username: ${{ github.actor }}          # 关键：使用工作流触发者作为用户名
+          password: ${{ secrets.GITHUB_TOKEN }}  # 关键：使用内置的 GITHUB_TOKEN 作为密码
 
       - name: Set up QEMU # 用于多平台编译
         uses: docker/setup-qemu-action@v2
@@ -39,5 +39,5 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64,linux/386,linux/arm/v6,linux/arm/v7
           tags: |
-            ghcr.io/${{ github.repository_owner }}/cfnat:latest # 🚀 关键：GHCR 的镜像 Tag 格式 🚀
-            ghcr.io/${{ github.repository_owner }}/cfnat:${{ github.sha }} # 可选：添加带 commit SHA 的 Tag
+            ghcr.io/${{ github.repository_owner }}/cfnat:latest # 这是 'latest' 标签
+            ghcr.io/${{ github.repository_owner }}/cfnat:${{ github.sha }} # 这是带 commit SHA 的标签
